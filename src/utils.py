@@ -20,5 +20,6 @@ def evaluate_policy(env_name, policy, seed=2019, num_episodes=10):
     seed : int, optional
         Random seed for the environment.
     num_episodes : int, optional
-        Number of episodes to perform evaluation. 
+        Number of episodes to perform evaluation.
     """
+    pass
