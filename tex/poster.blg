@@ -4,47 +4,45 @@ The top-level auxiliary file: poster.aux
 The style file: ieeetr.bst
 Database file #1: ref.bib
 Warning--empty journal in FLAIRS1612802
-Warning--empty author in deep
-Warning--empty year in deep
-You've used 4 entries,
+You've used 3 entries,
             1876 wiz_defined-function locations,
-            505 strings with 4120 characters,
-and the built_in function-call counts, 1002 in all, are:
-= -- 96
-> -- 34
+            496 strings with 4012 characters,
+and the built_in function-call counts, 698 in all, are:
+= -- 57
+> -- 39
 < -- 0
-+ -- 13
-- -- 9
-* -- 77
-:= -- 143
-add.period$ -- 4
-call.type$ -- 4
-change.case$ -- 4
++ -- 14
+- -- 11
+* -- 55
+:= -- 116
+add.period$ -- 3
+call.type$ -- 3
+change.case$ -- 3
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 52
-empty$ -- 94
-format.name$ -- 9
-if$ -- 239
+cite$ -- 4
+duplicate$ -- 34
+empty$ -- 63
+format.name$ -- 11
+if$ -- 160
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 4
-newline$ -- 15
+int.to.str$ -- 3
+missing$ -- 3
+newline$ -- 12
 num.names$ -- 3
-pop$ -- 14
+pop$ -- 11
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 36
+skip$ -- 17
 stack$ -- 0
-substring$ -- 68
-swap$ -- 21
+substring$ -- 28
+swap$ -- 10
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 3
-while$ -- 8
-width$ -- 5
-write$ -- 35
-(There were 3 warnings)
+warning$ -- 1
+while$ -- 5
+width$ -- 4
+write$ -- 27
+(There was 1 warning)

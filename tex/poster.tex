@@ -39,6 +39,10 @@
 \newcommand*{\CoLiNe}{\emph{CoLiNe}}
 \newcommand*{\LinCoLiNe}{\emph{LinCoLiNe}}
 
+\newlength{\maxwidth}
+\newcommand{\algalign}[2]% #1 = text to left, #2 = text to right
+{\makebox[\maxwidth][r]{$#1{}$}${}#2$}
+
 % inter eye distance
 \newcommand*{\ied}{IED}
 
@@ -51,24 +55,24 @@
 grid=false, 
 colspacing=0.7em,
 headerColorOne=cyan!20!white!90!black,
-borderColor=cyan!30!white!90!black,	
+%1, 0.638, 0, 0.447
+%headerColorOne=cyan!1!magenta!0.638!yellow!0!,
+borderColor=cyan!20!white!90!black,	
 textborder=rectangle,
 headerborder=closed,
 headershape=rectangle,
 headershade=plain,
-background=none,
+background=None,
 boxshade=none,
 columns=5,
-%bgColorOne=cyan!10!white,
+bgColorOne=cyan!10!white,
 headerheight=0.12\textheight}
 {
 	\includegraphics[scale=0.2]{voronoi_partition}
 	\includegraphics[scale=0.2]{gaussian_simulation_1}
 }
 {\sc\huge\bf Multi-Agent Area Coverage Control using Reinforcement Learning}	
-{\Large \bf Adekunle Adepegba, Suruz Miah, Davide Spinello 
-\\
-Presented by Simon Hu}
+{\Large\bf Presented by Simon Hu}
 % University logo
 {
 	\begin{tabular}{r}
@@ -103,6 +107,7 @@ Presented by Simon Hu}
 		\includegraphics[scale=0.3]{fig_ex.png}
 		\captionof{figure}{Example of a centroidal voronoi partition, for $\phi(q,t) = 1$.}
 	\end{center}
+	%\vspace{-0.6em}
 }
 
 \headerbox{TD3 Algorithm}{name=sacddpg,column=1,span=2}
@@ -119,43 +124,64 @@ Presented by Simon Hu}
 				\STATE Store the tuple $(s, a, r, s')$ into $R$. 
 				\STATE Sample minibatches of $N$ transitions $(s, a, r, s')$ from $R$.
 				\STATE Smooth the target policy according to $\tilde{a} \leftarrow \pi_{\phi'}(s) + \epsilon, \epsilon \sim \Clip(\mathcal{N}(0, \tilde{\sigma}), -c, c)$.
-				\STATE Perform double $Q$-learning and clip the results according to $y \leftarrow r + \gamma \min_{1,2}Q_{\theta'_i}(s', \tilde{a})$. 
+				\STATE Perform double $Q$-learning and clip the results according to the followng rule $y \leftarrow r + \gamma \min_{i=1,2}Q_{\theta'_i}(s', \tilde{a})$. 
 				\STATE Update the critics according to $\theta_i \leftarrow \min_{\theta_i}N^{-1}\sum(y - Q_{\theta_i}(s, a))^2$.
 				\IF {$t \mod d$} 
-					\STATE Update $\phi$ by the deterministic policy gradient $\nabla_{\phi}J(\phi) = N^{-1}\sum\nabla_a Q_{\theta_1}(s,a)\big|_{a = \pi_{\phi(s)}}\nabla_{\phi}\pi_{\phi(s)}$.
+					\STATE Update $\phi$ by the deterministic policy gradient according to the following rule $\nabla_{\phi}J(\phi) = N^{-1}\sum\nabla_a Q_{\theta_1}(s,a)\big|_{a = \pi_{\phi(s)}}\nabla_{\phi}\pi_{\phi(s)}$.
 					\STATE Update the target networks according to $\theta'_i \leftarrow \tau\theta_i + (1-\tau)\theta'_i, \:\: \phi' \leftarrow \tau\phi + (1-\tau)\phi'$.
 				\ENDIF 
 			\ENDFOR
 		\end{algorithmic}	
 	\end{algorithm}
-
-	The TD3 algorithm is an improvement on the SACDDPG algorithm, which is more vanilla, and prevents overestimation of the value function by decoupling the action selection and $Q$-value update. 
-	\\ \\
-	TD3 reduces variance by updating the policy at a lower frequency than the $Q$-function updates. 
-	\\ \\
-	A regularization strategy is introduced by adding a small amount of clipped random Gaussian noise to the selected action and then averages it over minibatches. 
+	The value function is given by
+	\begin{equation*}
+	\displaystyle V(e_i(k)) = \sum\limits_{\kappa = k}^{\infty}{e_i^T(\kappa)Qe_i(\kappa) + u_i^T(\kappa)Ru_i(\kappa)}
+	\end{equation*}
+	The value function and policy $\pi_i = u_i$ are approximated by a neural network with weights $\omega_{c, j}$ and $\omega_{a,j}$, and activation functions $\rho$ and $\sigma$:
+	\begin{equation*}
+	\displaystyle \widehat{V}_j(e_i(k)) = \omega_{c, j}^T\rho(e_i(k)), \:\: \widehat{u}_j(e_i(k)) = \omega_{a,j}^T\sigma(e_i(k)).
+	\end{equation*}
+	The loss for the critic and actor networks are given by the MSE loss. 
+	%\vspace{0.9em}
+	%The TD3 algorithm is an improvement on the SACDDPG algorithm, which is more vanilla, and prevents overestimation of the value function by decoupling the action selection and $Q$-value update. TD3 reduces variance by updating the policy at a lower frequency than the $Q$-function updates. A regularization strategy is introduced by adding a small amount of clipped random Gaussian noise to the selected action and then averages it over minibatches. 
 }
 
-\headerbox{Experimental Setup}{name=setup,column=3,span=2}
+\headerbox{Experimental Setup}{name=setup,column=1,below=sacddpg,span=2}
 {
-	Placeholder.
+	The dyanmics are given by $\dot{p}_i = u_i$ with maximum velocity 2 m/s. The learning rate used is $3 \times 10^{-4}, 3\times 10^{-3}$ for the actor and critic respectively. Both networks have two hidden layers of size $400$ and $300$. ReLU activation is used at each layer and a tanh activation is used at the output for the actor network only. A discount factor of $\gamma = 0.99$ is used and the soft update parameter $\tau = 0.001$ is used. 20 Agents are deployed in a pentagonal environment, described by $(0,100), (-95,31), (-59,-81), (59,-81), (95,31)$, and three scenarios are considered. In all three scenarios, different combinations of Gaussians place at different locations with varying covariances. The covariances in the $x$ and $y$ directions are assumed to be the same in scenarios 1 and 2, but not in scenario 3.
+	%\vspace{-0.35em}
 }
 
-\headerbox{Results}{name=results,column=3,span=2,below=setup}
+\headerbox{Results}{name=results,column=3,span=2}
 {
-	Placeholder.
+	\begin{center}
+		\includegraphics[scale=.25]{poster_sim1_tracking}
+		\includegraphics[scale=.25]{poster_sim1_final}
+		\includegraphics[scale=.25]{poster_sim1_cost_}
+		\captionof{figure}{Scenario 1: The position of the agents is tracked (left), with the red dot denoting the starting point. The final configuration of the agents is also shown (center). The cost function $\mathcal{H}$ as a function of the number of frames.}
+	\end{center}
+	\begin{center}
+		\includegraphics[scale=.25]{poster_sim2_tracking}
+		\includegraphics[scale=.25]{poster_sim2_final}
+		\includegraphics[scale=.25]{poster_sim2_cost_}
+		\captionof{figure}{Scenario 2. There is good coverage at the dark blue areas, which is the expected result.}
+	\end{center}
+	\begin{center}
+		\includegraphics[scale=.25]{poster_sim3_tracking}
+		\includegraphics[scale=.25]{poster_sim3_final}
+		\includegraphics[scale=.25]{poster_sim3_cost_}
+		\captionof{figure}{Scenario 3. There is good coverage on the center strip, which is the expected result. However, the cost function is high relative to the number of agents and area to cover.}
+	\end{center}
+
 }
 
-\headerbox{Extensions}{name=extentions,column=1,below=sacddpg,span=2}
-{
-	Placeholder.
-}
-
-\headerbox{}{name=references,column=3,span=2,below=results}
-{
+\headerbox{References}{name=references,column=3,span=2,below=results}
+{	
+	\small
 	\nocite{*}
 	\bibliography{ref}
 	\bibliographystyle{ieeetr}
+	\vspace{0em}
 }
 \end{poster}
 \end{document}
