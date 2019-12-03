@@ -1,0 +1,100 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{ps}[09/26/2019 v1.0 LaTeX style package for the purposes of writing homework sets]
+
+\RequirePackage{}
+\let\myDate\date
+
+\usepackage[utf8]{inputenc}
+
+% Packages for styling options.
+% Packages for figures. 
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Packages from AMS.
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% Misc. packages.
+\usepackage{physics}
+\usepackage{commath}
+\usepackage{mathtools}
+\usepackage[colorlinks=trye, bookmarksdepth=0, hidelinks]{hyperref}
+
+% amsthm package setup.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{corr}{Corollary}
+\newtheorem{lemma}{Lemma}
+
+\theoremstyle{definition}
+%\newtheorem{def}{Definition}
+\newtheorem{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem*{remark*}{Remark}
+
+%\numberwithin{theorem}{section}
+%\numberwithin{prop}{section}
+%\numberwithin{remark}{section}
+%\numberwithin{corr}{section}
+%\numberwithin{lemma}{section}
+%\numberwithin{def}{section}
+%\numberwithin{equation}{section}
+
+% Misc. operations.
+\usepackage[numbers,sort&compress]{natbib}
+\bibpunct{[}{]}{;}{n}{,}{,}
+\makeatletter
+\def\@tocline#1#2#3#4#5#6#7{\relax
+        \ifnum #1>\c@tocdepth % then omit
+        \else
+        \par \addpenalty\@secpenalty\addvspace{#2}%
+        \begingroup \hyphenpenalty\@M
+        \@ifempty{#4}{%
+                \@tempdima\csname r@tocindent\number#1\endcsname\relax
+        }{%
+                \@tempdima#4\relax
+        }%
+        \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
+        \rightskip\@pnumwidth plus4em \parfillskip-\@pnumwidth
+        #5\leavevmode\hskip-\@tempdima
+        \ifcase #1
+        \or\or \hskip 1em \or \hskip 2em \else \hskip 3em \fi%
+        #6\nobreak\relax
+        \hfill\hbox to\@pnumwidth{\@tocpagenum{#7}}\par% <---- \dotfill -> \hfill
+        \nobreak
+        \endgroup
+        \fi}
+\makeatother
+
+\setcounter{tocdepth}{5}
+
+\allowdisplaybreaks
+
+% Macro definitions. 
+\newcommand{\bfi}{\bfseries\itshape}
+\newcommand{\hookuparrow}{\mathrel{\rotatebox[origin=c]{90}{$\hookrightarrow$}}}
+
+\def\Xint#1{\mathchoice
+        {\XXint\displaystyle\textstyle{#1}}%
+        {\XXint\textstyle\scriptstyle{#1}}%
+        {\XXint\scriptstyle\scriptscriptstyle{#1}}%
+        {\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+        \!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+                \vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+
+\DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\bx}{\mathbf{x}}

@@ -1,0 +1,21 @@
+\begin{thebibliography}{1}
+
+\bibitem{Nowzari:2012:SCR:2207287.2207546}
+C.~Nowzari and J.~Cort{\'e}s, ``Self-triggered coordination of robotic networks
+  for optimal deployment,'' {\em Automatica}, vol.~48, pp.~1077--1087, June
+  2012.
+
+\bibitem{Cortes:2004}
+J.~{Cort{\'e}s}, S.~{Mart{\'i}nez}, T.~{Karatas}, and F.~{Bullo}, ``Coverage
+  control for mobile sensing networks,'' {\em IEEE Transactions on Robotics and
+  Automation}, vol.~20, pp.~243--255, April 2004.
+
+\bibitem{FLAIRS1612802}
+A.~Adepegba, S.~Miah, and D.~Spinello, ``Multi-agent area coverage control
+  using reinforcement learning,'' 2016.
+
+\bibitem{deep}
+``Deep deterministic policy gradient,'' {\em Deep Deterministic Policy Gradient
+  - Spinning Up Documentation}.
+
+\end{thebibliography}

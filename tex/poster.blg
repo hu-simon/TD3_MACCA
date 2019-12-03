@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: poster.aux
+The style file: ieeetr.bst
+Database file #1: ref.bib
+Warning--empty journal in FLAIRS1612802
+Warning--empty author in deep
+Warning--empty year in deep
+You've used 4 entries,
+            1876 wiz_defined-function locations,
+            505 strings with 4120 characters,
+and the built_in function-call counts, 1002 in all, are:
+= -- 96
+> -- 34
+< -- 0
++ -- 13
+- -- 9
+* -- 77
+:= -- 143
+add.period$ -- 4
+call.type$ -- 4
+change.case$ -- 4
+chr.to.int$ -- 0
+cite$ -- 7
+duplicate$ -- 52
+empty$ -- 94
+format.name$ -- 9
+if$ -- 239
+int.to.chr$ -- 0
+int.to.str$ -- 4
+missing$ -- 4
+newline$ -- 15
+num.names$ -- 3
+pop$ -- 14
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 36
+stack$ -- 0
+substring$ -- 68
+swap$ -- 21
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 3
+while$ -- 8
+width$ -- 5
+write$ -- 35
+(There were 3 warnings)

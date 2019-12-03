@@ -10,7 +10,7 @@ import torch.nn.functional as F
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class Actor(nn.Module):
-    def __init__(self, env, hidden_size=[256], discount_factor=0.99, learning_rate=1e-4):
+    def __init__(self, env, hidden_size=[256, 256], discount_factor=0.99, learning_rate=1e-4):
         """
         Initializes the network for the Actor.
 
@@ -34,9 +34,11 @@ class Actor(nn.Module):
         self.hidden_size = hidden_size
 
         self.input_layer = nn.Linear(self.state_dim, self.hidden_size[0])
-        # Figure out how to set up the hidden layers.
+        self.hidden_layer = nn.Linear(self.hidden_size[0], self.hidden_size[1])
         self.output_layer = nn.Linear(self.hidden_size[-1], self.action_dim)
-        # Figure out how to set up the batchnorm layers.
+
+        self.batchnorm_input = nn.BatchNorm1d(self.hidden_size[0])
+        self.batchnorm_hidden = nn.BatchNorm1d(self.hidden_size[-1])
         self.batchnorm_output = nn.BatchNorm1d(self.action_dim)
         self.tanh_layer = nn.Tanh()
 
@@ -59,14 +61,13 @@ class Actor(nn.Module):
         output : tensor
             Tensor representing the output of the network, i.e. the action to take.
         """
-        # TODO Need to put batch layers everywhere; the output is already done.
-        x = F.relu(self.input_layer(state))
-        # Figure out how to incorporate the hidden layers.
+        x = F.relu(self.batchnorm_input(self.input_layer(state)))
+        x = F.relu(self.batchnorm_hidden(self.hidden_layer(x)))
         output = self.tanh_layer(self.batchnorm_output(self.output_layer(x)))
         return output
 
 def Critic(nn.Module):
-    def __init__(self, env, hidden_size=[256], discount_factor, learning_rate=1e-3):
+    def __init__(self, env, hidden_size=[256, 256], discount_factor, learning_rate=1e-3):
         """
         Initializes the network for the Critic.
 
@@ -91,15 +92,20 @@ def Critic(nn.Module):
 
         # Network for the first critic.
         self.input_layer1 = nn.Linear(self.state_dim + self.action_dim, self.hidden_size[0])
-        # Figure out how to set up the hidden layers.
+        self.hidden_layer1 = nn.Linear(self.hidden_size[0], self.hidden_size[-1])
         self.output_layer1 = nn.Linear(self.hidden_size[-1], 1)
-        # Figure out how to set up a batch norm for the first hidden layer.
+
+        self.batchnorm_input1 = nn.BatchNorm1d(self.hidden_size[0])
+        self.batchnorm_hidden1 = nn.BatchNorm1d(self.hidden_size[-1])
 
         # Network for the second critic.
         self.input_layer2 = nn.Linear(self.state_dim + self.action_dim, self.hidden_size[0])
-        # Figure out how to set up the hidden layers.
+        self.hidden_layer2 = nn.Linear(self.hidden_state[0], self.hidden_state[-1])
         self.output_layer2 = nn.Linear(self.hidden_size[-1], 1)
-        # Figure out how to set up a batch norm for the first hidden layer.
+
+        self.batchnorm_input2 = nn.BatchNorm1d(self.hidden_size[0])
+        self.batchnorm_hidden2 = nn.BatchNorm1d(self.hidden_size[-1])
+
 
     def forward(self. state, action):
         """
@@ -117,11 +123,10 @@ def Critic(nn.Module):
         output : tensor
             Tensor representing the output of the network.
         """
-        # TODO incorporate the batch norm layer into the forward pass.
         x = torch.cat([state, action], 1)
-        x = F.relu(self.input_layer1(x))
-        # Figure out how to incorporate the hidden layers.
-        output = F.relu(self.output_layer1(x))
+        x = F.relu(self.batchnorm_input1(self.input_layer1(x)))
+        x = F.relu(self.batchnorm_hidden1(self.hidden_layer1(x)))
+        output = self.output_layer1(x)
         return output
 
     def forward_both(self, state, action):
@@ -142,15 +147,14 @@ def Critic(nn.Module):
         output : tensor
             Tensor representing the output of the network.
         """
-        # TODO incorporate the batch norm layer into the forward pass.
         x = torch.cat([state, action], 1)
 
-        x1 = F.relu(self.input_layer1(x))
-        # Figure out how to incorporate the hidden layers.
+        x1 = F.relu(self.batchnorm_input1(self.input_layer1(x)))
+        x1 = F.relu(self.batchnorm_hidden1(self.hidden_layer1(x1)))
         output1 = self.output_layer1(x1)
 
-        x2 = F.relu(self.input_layer2(x))
-        # Figure out how to incorporate the hidden layers.
+        x2 = F.relu(self.batchnorm_input2(self.input_layer2(x)))
+        x2 = F.relu(self.batchnorm_hidden2(self.hidden_layer2(x2)))
         output2 = self.output_layer2(x2)
 
         return output1, output2
