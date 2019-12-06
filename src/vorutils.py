@@ -42,7 +42,7 @@ def random_initialization(poly, num_points, seed=2019):
     random_points = [[random_points[i][0][0], random_points[i][1][0]] for i in range(num_points)]
     return random_points
 
-def create_finite_voronoi(vor, radius=None):
+def compute_finite_voronoi(vor, radius=None):
     """
     Creates a finite Voronoi tesselation in 2D, given some previously computed
     infinite Voronoi tesselation.
@@ -124,10 +124,81 @@ def create_finite_voronoi(vor, radius=None):
         regions_new.append(region_new.tolist())
     return regions_new, np.asarray(vertices_new)
 
-def compute_cell_statistics(poly, points, phi):
+def compute_vorinfo(poly, points):
     """
-    Computes the mass and center of mass of the Voronoi cell, given the
+    Given points and the enclosing polygon, computes the new Voronoi points
+    which are taken to be the centroids of the previous Voronoi partitions.
 
-    TODO documentation.
+    Parameters
+    ----------
+    poly : Shapely object
+        Shapely geometric object representing the polygon of interest.
+
+    points : list of tuples
+        List of current points in the Voronoi tesselation.
     """
-    pass
+    vor = Voronoi(points)
+    regions, vertices = compute_finite_voronoi(vor)
+    centroids = list()
+    polygons = list()
+
+    for region in regions:
+        polygon_points = vertices[region]
+        polygon = Polygon(polygon_points).intersection(poly)
+        centroids.append(list(polygon.centroid.coords))
+
+    centroids = [[centroids[i][0][0], centroids[i][0][1]] for i in range(len(centroids))]
+
+    return [regions, vertices], centroids
+
+def compute_closest_point(poly, points):
+    """
+    Given a polygon, finds the closest point in points that is
+    contained within the polygon.
+
+    Parameters
+    ----------
+    poly : Shapely object
+        Shapely geometric object representing the polygon of interest.
+    points : list of tuples
+        List of current points in the Voronoi tesselation.
+
+    Returns
+    -------
+    closest_point : tuple
+        The closest point contained in the polygon.
+    idx_closest_point : int
+        Index of the closest point contained in the polygon.
+    """
+    closest_point = None
+    for idx, point in enumerate(points):
+        if poly.contains(Point(point)):
+            closest_point = point
+            idx_closest_point = idx
+        else:
+            continue
+
+    return closest_point, idx_closest_point
+
+def create_transparent_cmap(cmap, N=255):
+    """
+    Copies the sepcified colormap and makes it a transparent one
+    by playing around with the alpha values.
+
+    Parameters
+    ----------
+    cmap : maplotlib cmap object
+        Matplotlib cmap object representing the color map to make
+        transparent.
+    N : int, optional
+        Integer used in determining the alpha value.
+
+    Returns
+    -------
+    transparent_cmap : matplotlib cmap object
+        Matplotlib cmap object representing the transparent cmap.
+    """
+    transparent_cmap = cmap
+    transparent_cmap._init()
+    transparent_cmap._lut[:,-1] = np.linspace(0,0.7,N+4)
+    return transparent_cmap

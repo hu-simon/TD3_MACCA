@@ -1,6 +1,5 @@
-\documentclass[landscape,fontscale=0.29,paperwidth=48in,paperheight=36in]{baposter}
+\documentclass[portrait,fontscale=0.292,paperheight=48in,paperwidth=36in]{baposter}
 
-% Original fontscale=0.292
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{etoolbox}
@@ -15,7 +14,6 @@
 \usepackage{amssymb}
 \usepackage{relsize}
 \usepackage{multirow}
-\usepackage{setspace}
 \usepackage{enumerate}
 \usepackage{booktabs}
 \usepackage{ps}
@@ -23,6 +21,7 @@
 \usepackage{graphicx}
 \usepackage{multicol}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{ae}
 
 \setlength{\columnsep}{1.7em}
@@ -50,53 +49,55 @@
 
 \DeclareMathOperator{\Clip}{clip}
 
-
 \begin{document}
+\vspace{-7em}
+\begin{poster}
+	{	
+		grid=false, 
+		colspacing=0.7em,
+		headerColorOne=cyan!20!white!90!black,
+		%1, 0.638, 0, 0.447
+		%headerColorOne=cyan!1!magenta!0.638!yellow!0!,
+		borderColor=cyan!20!white!90!black,	
+		textborder=rectangle,
+		headerborder=closed,
+		headershape=rectangle,
+		headershade=plain,
+		background=None,
+		boxshade=none,
+		columns=5,
+		bgColorOne=cyan!10!white,
+		eyecatcher=false,
+		headerheight=0.11\textheight
+		%headerheight=0.12\textheight
+	}
+	{
+		\includegraphics[scale=0.2]{voronoi_partition}
+		\includegraphics[scale=0.2]{gaussian_simulation_1}
+	}
+	{\sc\huge\bf Multi-Agent Area Coverage Control using Reinforcement Learning}	
+	{\Large\bf Presented by Simon Hu}
+	% University logo
+	{
+		\begin{tabular}{r}
+			\raisebox{0em}[0em][0em]{\includegraphics[height=0.03\textheight]{logo}}
+		\end{tabular}
+	}
 
-\begin{poster}{
-grid=false, 
-colspacing=0.7em,
-headerColorOne=cyan!20!white!90!black,
-%1, 0.638, 0, 0.447
-%headerColorOne=cyan!1!magenta!0.638!yellow!0!,
-borderColor=cyan!20!white!90!black,	
-textborder=rectangle,
-headerborder=closed,
-headershape=rectangle,
-headershade=plain,
-background=None,
-boxshade=none,
-columns=5,
-bgColorOne=cyan!10!white,
-eyecatcher=false,
-headerheight=0.12\textheight}
-{
-	\includegraphics[scale=0.2]{voronoi_partition}
-	\includegraphics[scale=0.2]{gaussian_simulation_1}
-}
-{\sc\huge\bf Multi-Agent Area Coverage Control using Reinforcement Learning}	
-{\Large\bf Presented by Simon Hu}
-% University logo
-{
-	\begin{tabular}{r}
-		\includegraphics[scale=0.5]{logo}
-	\end{tabular}
-}
-
-\headerbox{Problem Statement}{name=problem_statement,column=0,row=0,span=1}
+\headerbox{Problem Statement}{name=problem_statement,column=0,span=2}
 {
 	Consider a group of $N$ homogeneous agents moving in a compact environment $\Omega \subset \R^2$ where the dynamics of the agent are given by $\dot{p_i} = g(p_i, u_i)$ where $p_i = (x_i, y_i) \in \R^2$ is the agent position and $u_i = (u_{x_i}, u_{y_i})$ represents the control input. The goal is to find a configuration of agent positions $p = (p_1, p_2, \dots, p_N$ such that the cost index
 	\begin{equation*}
 		\displaystyle \mathcal{H}(p, t) = \int_{\Omega}{\max\limits_{i=1,\dots,N}{f_i(\,\norm{p_i - q})} \phi(q, t) \dif q}
 	\end{equation*}
-	is maximized. Though classical control methods have been proposed for solving the problem, reinforcement learning methods are more robust. Applications include search and rescue, data collection, and surveillance missions.
-	\vspace{0.65em} 
+	is maximized. Applications include harbour control, search and rescue, data collection, and surveillance missions.
 }
-\headerbox{Voronoi Partitions}{name=cvp,below=problem_statement,span=1}
+
+\headerbox{Voronoi Partitions}{name=voronoi,column=0,span=2,below=problem_statement}
 {
 	The Voronoi partition of $\Omega$ is given by $\V = \bigcup \V_i$ where each $\V_i$ is given by 
 	\begin{equation*}
-		\displaystyle \left\{ q \in \Omega \: | \: \norm{q - p_i} \leq \norm{q - p_j}, \, \forall j \neq i \right\}.
+		\displaystyle \V_i = \left\{ q \in \Omega \: | \: \norm{q - p_i} \leq \norm{q - p_j}, \, \forall j \neq i \right\}.
 	\end{equation*}
 	The mass $m_{\V_i}$ and center of mass $c_{\V_i}$ of each $V_i$ are given by 
 	\begin{equation*}
@@ -106,16 +107,16 @@ headerheight=0.12\textheight}
 	\begin{equation*}
 		\displaystyle \mathcal{H}(p, t) = \sum\limits_{i=1}^{n}{\int_{\V_i}{f_i(\,\norm{p_i - q}) \phi(q, t) \dif q}}.
 	\end{equation*}
-	\textrm{[Cort\'es et al., 2004]} showed that the optimal partition of $\Omega$ that maximizes $\mathcal{H}$ is the centroidal voronoi partition. 
+	\textrm{[Cort\'es et al., 2004]} showed that the optimal partition of $\Omega$ that maximizes $\mathcal{H}$ is the centroidal voronoi partition. So the optimal strategy is to follow the centroids of the computed Voronoi cells. 
 	\begin{center}
-		\includegraphics[scale=0.192]{fig_ex_2.png}
-		\includegraphics[scale=0.192]{fig_ex.png}
-		\captionof{figure}{Example of a Voronoi partition, and a centroidal Voronoi partition, for $\phi(q,t) = 1$.}
+		\includegraphics[scale=0.299]{fig_ex_2.png}
+		\includegraphics[scale=0.299]{fig_ex.png}
+		\captionof{figure}{Example of a Voronoi partition, and a centroidal voronoi partition, for $\phi(q,t) = 1$.}
 	\end{center}
 	%\vspace{-0.6em}
 }
 
-\headerbox{TD3 Algorithm}{name=sacddpg,column=1,span=2}
+\headerbox{Twin-Delayed SAC DDPG (TD3)}{name=td3,column=2,span=3}
 {
 	\begin{algorithm}[H]
 		\caption{Twin-Delayed Actor-Critic DDPG}
@@ -129,7 +130,7 @@ headerheight=0.12\textheight}
 				\STATE Store the tuple $(s, a, r, s')$ into $R$. 
 				\STATE Sample minibatches of $N$ transitions $(s, a, r, s')$ from $R$.
 				\STATE Smooth the target policy according to $\tilde{a} \leftarrow \pi_{\phi'}(s) + \epsilon, \epsilon \sim \Clip(\mathcal{N}(0, \tilde{\sigma}), -c, c)$.
-				\STATE Perform double $Q$-learning and clip the results according to the followng rule $y \leftarrow r + \gamma \min_{i=1,2}Q_{\theta'_i}(s', \tilde{a})$. 
+				\STATE Clip the results according to the followng rule $y \leftarrow r + \gamma \min_{i=1,2}Q_{\theta'_i}(s', \tilde{a})$. 
 				\STATE Update the critics according to $\theta_i \leftarrow \min_{\theta_i}N^{-1}\sum(y - Q_{\theta_i}(s, a))^2$.
 				\IF {$t \mod d$} 
 					\STATE Update $\phi$ by the deterministic policy gradient according to the following rule $\nabla_{\phi}J(\phi) = N^{-1}\sum\nabla_a Q_{\theta_1}(s,a)\big|_{a = \pi_{\phi(s)}}\nabla_{\phi}\pi_{\phi(s)}$.
@@ -138,59 +139,56 @@ headerheight=0.12\textheight}
 			\ENDFOR
 		\end{algorithmic}	
 	\end{algorithm}
+	\vspace{-0.8em}
 	The value function is given by
 	\begin{equation*}
-	\displaystyle V(e_i(k)) = \sum\limits_{\kappa = k}^{\infty}{e_i^T(\kappa)Qe_i(\kappa) + u_i^T(\kappa)Ru_i(\kappa)}
+		\displaystyle V(e_i(k)) = \sum\limits_{\kappa = k}^{\infty}{e_i^T(\kappa)Qe_i(\kappa) + u_i^T(\kappa)Ru_i(\kappa)}
 	\end{equation*}
 	The value function and policy $\pi_i = u_i$ are approximated by a neural network with weights $\omega_{c, j}$ and $\omega_{a,j}$, and activation functions $\rho$ and $\sigma$:
 	\begin{equation*}
-	\displaystyle \widehat{V}_j(e_i(k)) = \omega_{c, j}^T\rho(e_i(k)), \:\: \widehat{u}_j(e_i(k)) = \omega_{a,j}^T\sigma(e_i(k)).
+		\displaystyle \widehat{V}_j(e_i(k)) = \omega_{c, j}^T\rho(e_i(k)), \:\: \widehat{u}_j(e_i(k)) = \omega_{a,j}^T\sigma(e_i(k)).
 	\end{equation*}
 	The loss for the critic and actor networks are given by the MSE loss. 
 	%\vspace{0.9em}
 	%The TD3 algorithm is an improvement on the SACDDPG algorithm, which is more vanilla, and prevents overestimation of the value function by decoupling the action selection and $Q$-value update. TD3 reduces variance by updating the policy at a lower frequency than the $Q$-function updates. A regularization strategy is introduced by adding a small amount of clipped random Gaussian noise to the selected action and then averages it over minibatches. 
 }
 
-\headerbox{Experimental Setup}{name=setup,column=1,below=sacddpg,span=2}
-{
-	\onehalfspacing
-	The dyanmics are given by $\dot{p}_i = u_i$ with maximum velocity 1 m/s. The learning rate used is $3 \times 10^{-4}, 3\times 10^{-3}$ for the actor and critic respectively. Both networks have two hidden layers of size $400$ and $300$. ReLU activation is used at each layer and a tanh activation is used at the output for the actor network only. A discount factor of $\gamma = 0.99$ is used and the soft update parameter $\tau = 0.001$ is used. A predictor-corrector method is used for numerical integration.
-	\\
-	\\
-	20 Agents are deployed in a pentagonal environment, described by $(0,100), (-95,31), (-59,-81), (59,-81), (95,31)$, and three scenarios are considered. In all three scenarios, different combinations of Gaussians place at different locations with varying covariances. The covariances in the $x$ and $y$ directions are assumed to be the same in scenarios 1 and 2, but not in scenario 3. Additionally, the Agents are initialized by uniformly sampling points within a rectangular area near the bottom of the pentagon. 
-	\vspace{0.35em}
-}
-
-\headerbox{Results}{name=results,column=3,span=2}
+\headerbox{Results}{name=results,column=2,span=3,below=td3}
 {
 	\begin{center}
-		\includegraphics[scale=.25]{poster_sim1_tracking}
-		\includegraphics[scale=.25]{poster_sim1_final}
-		\includegraphics[scale=.25]{poster_sim1_cost_}
+		\includegraphics[scale=.3]{poster_sim1_tracking}
+		\includegraphics[scale=.3]{poster_sim1_final}
+		\includegraphics[scale=.3]{poster_sim1_cost_}
 		\captionof{figure}{Scenario 1: The position of the agents is tracked (left), with the red dot denoting the starting point. The final configuration of the agents is also shown (center). The cost function $\mathcal{H}$ as a function of the number of frames.}
 	\end{center}
 	\begin{center}
-		\includegraphics[scale=.25]{poster_sim2_tracking}
-		\includegraphics[scale=.25]{poster_sim2_final}
-		\includegraphics[scale=.25]{poster_sim2_cost_}
+		\includegraphics[scale=.3]{poster_sim2_tracking}
+		\includegraphics[scale=.3]{poster_sim2_final}
+		\includegraphics[scale=.3]{poster_sim2_cost_}
 		\captionof{figure}{Scenario 2. There is good coverage at the dark blue areas, which is the expected result.}
 	\end{center}
 	\begin{center}
-		\includegraphics[scale=.25]{poster_sim3_tracking}
-		\includegraphics[scale=.25]{poster_sim3_final}
-		\includegraphics[scale=.25]{poster_sim3_cost_}
+		\includegraphics[scale=.3]{poster_sim3_tracking}
+		\includegraphics[scale=.3]{poster_sim3_final}
+		\includegraphics[scale=.3]{poster_sim3_cost_}
 		\captionof{figure}{Scenario 3. There is good coverage on the center strip, which is the expected result. However, the cost function is high relative to the number of agents and area to cover.}
 	\end{center}
-
 }
 
-\headerbox{References}{name=references,column=3,span=2,below=results}
-{	
+\headerbox{Experimental Setup}{name=setup,column=0,span=2,below=voronoi}
+{
+	The dyanmics are given by $\dot{p}_i = u_i$ with maximum velocity 1 m/s. 20 Agents are deployed in a pentagonal environment, described by $(0,100), (-95,31), (-59,-81), (59,-81), (95,31)$, and three scenarios are considered. In all three scenarios, different combinations of Gaussians place at different locations with varying covariances. The covariances in the $x$ and $y$ directions are assumed to be the same in scenarios 1 and 2, but not in scenario 3.
+}
+
+\headerbox{}{name=references,column=0,below=setup,span=2}
+{
 	\small
 	\nocite{*}
 	\bibliography{ref}
 	\bibliographystyle{ieeetr}
-	\vspace{1.3em}
+	\vspace{0.3em}
 }
+
 \end{poster}
+
 \end{document}
