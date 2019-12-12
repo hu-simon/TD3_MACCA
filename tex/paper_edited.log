@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 DEC 2019 13:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 DEC 2019 18:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**paper.tex
-(./paper.tex
+**paper_edited.tex
+(./paper_edited.tex
 LaTeX2e <2018-04-01> patch level 2
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (./IEEEtran.cls
@@ -1602,8 +1602,8 @@ Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
 Package: etoolbox 2018/02/11 v2.5e e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count292
 )
-(./paper.aux)
-\openout1 = `paper.aux'.
+(./paper_edited.aux)
+\openout1 = `paper_edited.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
@@ -1670,9 +1670,9 @@ LaTeX Info: Redefining \ref on input line 26.
 LaTeX Info: Redefining \pageref on input line 26.
 LaTeX Info: Redefining \nameref on input line 26.
 
-(./paper.out) (./paper.out)
+(./paper_edited.out) (./paper_edited.out)
 \@outlinefile=\write4
-\openout4 = `paper.out'.
+\openout4 = `paper_edited.out'.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 29.
@@ -1689,133 +1689,36 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <fig_ex_2.png, id=4, 462.528pt x 346.896pt>
 File: fig_ex_2.png Graphic file (type png)
 <use fig_ex_2.png>
-Package pdftex.def Info: fig_ex_2.png  used on input line 64.
+Package pdftex.def Info: fig_ex_2.png  used on input line 50.
 (pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
 <fig_ex.png, id=6, 462.528pt x 346.896pt>
 File: fig_ex.png Graphic file (type png)
 <use fig_ex.png>
-Package pdftex.def Info: fig_ex.png  used on input line 69.
+Package pdftex.def Info: fig_ex.png  used on input line 55.
 (pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
  [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./fig_ex_2.png> <./fig_ex.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 129.
+put line 117.
 
-Overfull \hbox (23.26338pt too wide) detected at line 147
+
+LaTeX Warning: Reference `critic_loss' on page 2 undefined on input line 131.
+
+
+Overfull \hbox (23.26338pt too wide) detected at line 135
 \OMS/cmsy/m/n/10 r[]\OML/cmm/m/it/10 J \OMS/cmsy/m/n/10 ^^Y [] [] []\OML/cmm/m/
 it/10 :
  []
 
-
-Underfull \hbox (badness 2088) in paragraph at lines 159--160
-[]\OT1/ptm/m/n/10 The Soft Actor-Critic DDPG Al-go-rithm suf-fers from
- []
-
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 182--183
+Underfull \hbox (badness 10000) in paragraph at lines 170--171
 [] []\OT1/ptm/m/n/10 Update the crit-ics ac-cord-ing to $\OML/cmm/m/it/10 ![] \
 OMS/cmsy/m/n/10  
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
-[]\OT1/ptm/m/n/10 Training and roll-out are per-formed on a
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
-\OT1/ptm/m/n/10 cus-tom en-vi-ron-ment. The en-vi-ron-ment is a two-
- []
-
-
-Underfull \hbox (badness 3872) in paragraph at lines 201--202
-\OT1/ptm/m/n/10 dimensional pen-tag-o-nal poly-gon given by the ver-tices
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
-\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 100)\OML/cmm/m/it/10 ; \OT
-1/cmr/m/n/10 (\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 95\OML/cmm/m/it/10 ; \OT1/cmr
-/m/n/10 31)\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n
-/10 59\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 81)\OML/cmm/m/it/1
-0 ; \OT1/cmr/m/n/10 (59\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 8
-1)\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 (95\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 31)$
-\OT1/ptm/m/n/10 . For
- []
-
-
-Underfull \hbox (badness 1776) in paragraph at lines 201--202
-\OT1/ptm/m/n/10 re-al-is-tic con-straints, the agents are as-sumed to have a
- []
-
-[3]
-<poster_sim1_tracking.png, id=108, 462.528pt x 346.896pt>
-File: poster_sim1_tracking.png Graphic file (type png)
-<use poster_sim1_tracking.png>
-Package pdftex.def Info: poster_sim1_tracking.png  used on input line 217.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-<poster_sim1_final.png, id=109, 462.528pt x 346.896pt>
-File: poster_sim1_final.png Graphic file (type png)
-<use poster_sim1_final.png>
-Package pdftex.def Info: poster_sim1_final.png  used on input line 218.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-<poster_sim1_cost_.png, id=110, 462.528pt x 346.896pt>
-File: poster_sim1_cost_.png Graphic file (type png)
-<use poster_sim1_cost_.png>
-Package pdftex.def Info: poster_sim1_cost_.png  used on input line 219.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 220.
-See the caption package documentation for explanation.
-
-<poster_sim2_tracking.png, id=111, 462.528pt x 346.896pt>
-File: poster_sim2_tracking.png Graphic file (type png)
-<use poster_sim2_tracking.png>
-Package pdftex.def Info: poster_sim2_tracking.png  used on input line 223.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-<poster_sim2_final.png, id=112, 462.528pt x 346.896pt>
-File: poster_sim2_final.png Graphic file (type png)
-<use poster_sim2_final.png>
-Package pdftex.def Info: poster_sim2_final.png  used on input line 224.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-<poster_sim2_cost_.png, id=113, 462.528pt x 346.896pt>
-File: poster_sim2_cost_.png Graphic file (type png)
-<use poster_sim2_cost_.png>
-Package pdftex.def Info: poster_sim2_cost_.png  used on input line 225.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 226.
-See the caption package documentation for explanation.
-
-<poster_sim3_tracking.png, id=114, 462.528pt x 346.896pt>
-File: poster_sim3_tracking.png Graphic file (type png)
-<use poster_sim3_tracking.png>
-Package pdftex.def Info: poster_sim3_tracking.png  used on input line 229.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-<poster_sim3_final.png, id=115, 462.528pt x 346.896pt>
-File: poster_sim3_final.png Graphic file (type png)
-<use poster_sim3_final.png>
-Package pdftex.def Info: poster_sim3_final.png  used on input line 230.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-<poster_sim3_cost_.png, id=116, 462.528pt x 346.896pt>
-File: poster_sim3_cost_.png Graphic file (type png)
-<use poster_sim3_cost_.png>
-Package pdftex.def Info: poster_sim3_cost_.png  used on input line 231.
-(pdftex.def)             Requested size: 92.50395pt x 69.37796pt.
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 232.
-See the caption package documentation for explanation.
-
-[4 <./poster_sim1_tracking.png> <./poster_sim1_final.png> <./poster_sim1_cost_.
-png> <./poster_sim2_tracking.png> <./poster_sim2_final.png> <./poster_sim2_cost
-_.png> <./poster_sim3_tracking.png> <./poster_sim3_final.png> <./poster_sim3_co
-st_.png>] (./paper.bbl)
+(./paper_edited.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -1827,26 +1730,28 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 246.
-[5
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 246.
- (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 246.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 246.
-Package rerunfilecheck Info: File `paper.out' has not changed.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 191.
+[3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 191.
+ (./paper_edited.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 191.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 191.
+Package rerunfilecheck Info: File `paper_edited.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 246.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
  ) 
 Here is how much of TeX's memory you used:
- 18583 strings out of 492649
- 327318 string characters out of 6129622
- 417893 words of memory out of 5000000
- 22228 multiletter control sequences out of 15000+600000
+ 18527 strings out of 492649
+ 326186 string characters out of 6129622
+ 417800 words of memory out of 5000000
+ 22191 multiletter control sequences out of 15000+600000
  568716 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 46i,11n,40p,10422b,737s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 46i,11n,40p,10429b,738s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
 xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
@@ -1863,10 +1768,10 @@ mf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fo
 nts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
 /urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
 /utmri8a.pfb>
-Output written on paper.pdf (5 pages, 1057558 bytes).
+Output written on paper_edited.pdf (3 pages, 282810 bytes).
 PDF statistics:
- 214 PDF objects out of 1000 (max. 8388607)
- 168 compressed objects within 2 object streams
- 75 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 175 PDF objects out of 1000 (max. 8388607)
+ 149 compressed objects within 2 object streams
+ 65 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

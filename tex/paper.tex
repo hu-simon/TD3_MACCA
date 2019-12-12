@@ -29,7 +29,7 @@
 \thispagestyle{empty}
 \pagestyle{empty}
 \begin{abstract}
-	In this paper, an area coverage control law in cooperation with a reinforcement learning technique is considered, for solving the optimal deployment problem. Traditional methods proposed for solving the problem have come from classical control theory, like proportional or linear quadratic gaussian control designs. These traditional methods lack the robustness and ability to adapt to changing environments, especially when these environmental forces contribute greatly to the motion of agents. A delayed actor-critic deep deterministic policy gradient (TD3) algorithm is proposed to learn the value function and policy. Simulation results are presented for stationary and time-varying scalar fields. 
+	In this paper, an area coverage control law is combined with a reinforcement learning algorithm to solve the optimal deployment problem. Traditional methods proposed for solving the method, from classical control theory, use proportional or linear quadratic Gaussian control designs. These traditional methods lack the robustness and adaptivity to dynamic environments, especially when these dynamic environment contribute significantly to the motion of the agents. A delayed actor-critic deep deterministic policy gradient algorithm is proposed to learn the value function and optimal policy. Simulation results are presented for stationary and time-varying scalar fields.
 \end{abstract}
 \section{Introduction}
 	Coverage control of multi-agent system is concerned with deploying agents over an environment to maximize sensor coverage, for various tasks such as sensing, data collection and surveillance missions. Applications of this problem are harbour patrol, search and rescue, data, and surveillance missions. Consider a group of $N$ homogeneous agents moving in a compact environment $\Omega \subset \R^2$, where the dynamics of the $i$-th agent are given by 
@@ -165,7 +165,7 @@ Then clipped double $Q$-learning is applied, which uses the minimum estimated up
 \begin{equation*}
 	\displaystyle y = r + \gamma Q_\omega(s', \pi_{\theta}(s') + \epsilon), \:\: \epsilon \sim \Clip(\mathcal{N}(0, \sigma), -c, +c).
 \end{equation*}
-The twin-delayed actor-critic DDPG (TD3) algorithm is given in Algorithm (\refeq{sacddpg}).
+The twin-delayed actor-critic DDPG (TD3) algorithm is given in Algorithm (\refeq{sacddpg}). The proposed area coverage control algorithm is then given by combining the TD3 algorithm to find the optimal policy and the Voronoi partitions are used to find the centroid, which is the point the agent must move towards. 
 \begin{algorithm}
 	\caption{Twin-Delayed Actor-Critic DDPG}
 	\begin{algorithmic}[2]
@@ -198,7 +198,7 @@ The twin-delayed actor-critic DDPG (TD3) algorithm is given in Algorithm (\refeq
 \section{Experimental Setup}
 In this section, we describe the experiment setup. This is composed of two parts: a simple environment for training the algorithm, and the neural network architecture used. This is composed of three parts: the environment, neural network architecture, and proposed scenarios. 
 \subsection{Environment Setup}
-Training and rollout are performed on a custom environment. The environment is a two-dimensional pentagonal polygon given by the vertices $(0,100), (-95,31), (-59,-81), (59,-81), (95,31)$. For realistic constraints, the agents are assumed to have a maximum acceleration of $1$ m/s. 
+Training and rollout are performed on a custom environment. The environment is a two-dimensional pentagonal polygon given by the vertices $(0,100), (-95,31), (-59,-81), (59,-81), (95,31)$. For realistic constraints, the agents are assumed to have a maximum acceleration of $1$ m/s. A very small current flow term, in two dimensions, is added into the environment to model environmental forces acting on the robot. 
 
 The overall environment is broken down into subenvironments. If there are $N$ agents, then there are $N$ subenvironments, each one governed by one agent. The agent takes actions in that subenvironment and an episode ends when the agent has either hit the boundary of the subenvironment, or is within $0.01$ euclidean distance of the centroid. When all agents subenvironments have terminated, then the episode terminates and another iteration begins. Even though the centroid changes when the position of the agent changes, it is assumed that the Voronoi cells of the other agents do not change during this time and thus the centroid does not change while the agent moves. The point is to learn controls that allow an agent to move around in the environment and the Voronoi cells are only there to assist with finding the goal location the agent must reach. An agent earns a reward of $1 / \norm{q - p_i}$ where $\norm{\cdot}$ is the Euclidean distance. No $\phi$ is used here. 
 \subsection{Network Architecture}
@@ -210,7 +210,9 @@ The actor is approximated using a neural network with two hidden layers of size 
 \section{Results}
 Three scenarios are considered. In all three scenarios, the distribution $\phi(q,t)$ is a family of subgaussian distributions with infinite support, and is assumed to be fixed for all scenarios. There is an additional simulation that we were unable to capture at the time of writing this paper, but a video is attached showing the fourth simulation. In the fourth and final simulation, a time-varying $\phi$ is considered. Additionally, the domain $\Omega \subset \R^2$ considered is a pentagonal domain, and 20 agents are initialized randomly near the bottom of the pentagon. The integration is done using a fifth-order Gauss-Lagrange quadrature rule for numerical accuracy and speed. For rollout, $200$ frames are used. 
 
-Simulations show that the agents are able to learn controls that allow them to achieve optimal coverage of the environment.
+Simulations show that the agents are able to learn controls that allow them to achieve optimal coverage of the environment. The coverage portion is obtained using the Voronoi partitions method, and the controls are obtained using reinforcement learning. Note that this algorithm does not guarantee collision avoidance, except in the case where the agents are modeled as point-robots. The algorithm can be modified to consider clamped Voronoi regions, but that is not discussed here. 
+
+The cost functions theoretically can get close to zero, but will likely not ever reach $0$ since that would mean we have complete coverage of the domain and that can only be achieved if the number of agents is equal to the packing number of $\Omega$. What is important to note, however, is that the cost function is increasing and plateaus out, meaning that it has reached a local maximum. There are no guarantees of a global maximum.
 \begin{center}
 	\includegraphics[scale=.2]{poster_sim1_tracking}
 	\includegraphics[scale=.2]{poster_sim1_final}
@@ -230,7 +232,13 @@ Simulations show that the agents are able to learn controls that allow them to a
 	\captionof{figure}{Scenario 3: The position of the agents is tracked (top left), with the red dot denoting the starting point. The final configuration of the agents is also shown (top right). The cost function $\mathcal{H}$ as a function of the number of frames (bottom center). The dark blue areas are Gaussians of covariance $\sigma_x = 10, \sigma_y = 30$ and are centered at $(0,0), (0,50), (0,-50)$.}
 \end{center}
 \section{Further Discussion}
+The simulation results show that the proposed area coverage control law does indeed provide enough coverage of the domain. However, the simulations do not show the true power of the algorithm. The reason we turned to reinforcement learning methods was because traditional control methods perform poorly at worst, and adequately at best, when the environment is dynamic or the dynamics of the agents are highly nonlinear. Future areas of study would be to apply the area coverage control law to more complex environments and use more interesting dynamics. 
+
+Additionally, the area coverage control law was distributed with respect to the Voronoi tesselation but not the TD3 algorithm. Better reinforcement learning methods like D4PG \cite{barth-maron2018distributional} and multi-agent deep deterministic policy gradients (MADDPG) \cite{lowe2017multiagent} are more suited for the multi-agent case especially when the agents must cooperate with each other to perform specific tasks. 
+
+Finally, the $\phi$ that is used has to be learned by some external algorithm. In the simulations, we used faux examples of $\phi$ that are reasonable for simulation but unrealistic in nature. 
 \section{Conclusion}
+	In this paper, an area coverage control law in cooperation with a reinforcement learning technique was proposed for solving the optimal deployment problem. A delayed actor-critic deep deterministic policy gradient (TD3) algorithm is proposed to learn the value function and policy. Simulation results were presented for stationary and time-varying scalar fields. The simulation results show that the algorithm is efficient for solving the area coverage control problem, though with simple dynamics. 
 \nocite{*}
 \bibliography{ref}
 \bibliographystyle{ieeetr}

@@ -9,6 +9,15 @@ J.~{Cort{\'e}s}, S.~{Mart{\'i}nez}, T.~{Karatas}, and F.~{Bullo}, ``Coverage
 A.~Adepegba, S.~Miah, and D.~Spinello, ``Multi-agent area coverage control
   using reinforcement learning,'' 2016.
 
+\bibitem{5991583}
+C.~{Nowzari} and J.~{Cortés}, ``Self-triggered coordination of robotic
+  networks for optimal deployment,'' pp.~1039--1044, June 2011.
+
+\bibitem{lillicrap2015continuous}
+T.~P. Lillicrap, J.~J. Hunt, A.~Pritzel, N.~Heess, T.~Erez, Y.~Tassa,
+  D.~Silver, and D.~Wierstra, ``Continuous control with deep reinforcement
+  learning,'' 2015.
+
 \bibitem{fujimoto2018addressing}
 S.~Fujimoto, H.~van Hoof, and D.~Meger, ``Addressing function approximation
   error in actor-critic methods,'' 2018.
@@ -21,14 +30,5 @@ G.~Barth-Maron, M.~W. Hoffman, D.~Budden, W.~Dabney, D.~Horgan, D.~TB,
 \bibitem{lowe2017multiagent}
 R.~Lowe, Y.~Wu, A.~Tamar, J.~Harb, P.~Abbeel, and I.~Mordatch, ``Multi-agent
   actor-critic for mixed cooperative-competitive environments,'' 2017.
-
-\bibitem{5991583}
-C.~{Nowzari} and J.~{Cortés}, ``Self-triggered coordination of robotic
-  networks for optimal deployment,'' pp.~1039--1044, June 2011.
-
-\bibitem{lillicrap2015continuous}
-T.~P. Lillicrap, J.~J. Hunt, A.~Pritzel, N.~Heess, T.~Erez, Y.~Tassa,
-  D.~Silver, and D.~Wierstra, ``Continuous control with deep reinforcement
-  learning,'' 2015.
 
 \end{thebibliography}
